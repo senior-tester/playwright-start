@@ -21,6 +21,6 @@ class CheckBoxesPage(BasePage):
 
     def check_result_is_as_data(self, data):
         result = self.page.locator(result_text)
-        assert result.inner_text() == data
-        return expect(result).to_have_text(data)
+        # assert result.inner_text() == data
+        expect(result).to_have_text(data, timeout=500)
 

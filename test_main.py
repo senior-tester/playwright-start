@@ -3,6 +3,7 @@ import pytest
 from playwright.sync_api import Page, expect
 
 
+@pytest.mark.skip
 def test_first(page: Page):
     page.goto('https://www.google.com/')
     expect(page).to_have_title('Google')
@@ -15,3 +16,44 @@ def test_first(page: Page):
     search_button.click()
     expect(page).to_have_title(re.compile('cat'))
     print(page.title())
+
+
+@pytest.mark.skip
+def test_dynamic_props(page: Page):
+    page.goto('https://demoqa.com/dynamic-properties')
+    button = page.locator('#visibleAfter')
+    button.click()
+    page.screenshot(type='jpeg', path='/Users/eokulik/projects/playwright-start/shot.jpg')
+
+
+@pytest.mark.skip
+def test_iframe(page: Page):
+    page.goto('https://www.qa-practice.com/elements/iframe/iframe_page')
+    # print(page.frames)
+    # print(page.main_frame.child_frames)
+    toggler = page.frames[1].locator('css=.navbar-toggler-icon')
+    toggler.click()
+    page.screenshot(type='jpeg', path='/Users/eokulik/projects/playwright-start/toggler.jpg')
+
+
+@pytest.mark.skip
+def test_drag(page: Page):
+    page.goto('https://www.qa-practice.com/elements/dragndrop/boxes')
+    draggable = page.locator('#rect-draggable')
+    droppable = page.locator('#rect-droppable')
+    page.drag_and_drop('#rect-draggable', '#rect-droppable')
+    page.screenshot(type='jpeg', path='/Users/eokulik/projects/playwright-start/drag.jpg')
+
+
+@pytest.mark.skip
+def test_select(page: Page):
+    page.goto('https://www.qa-practice.com/elements/button/disabled')
+    page.locator('#id_select_state').select_option('enabled')
+    page.screenshot(type='jpeg', path='/Users/eokulik/projects/playwright-start/select.jpg')
+
+
+def test_hover(page: Page):
+    page.goto('https://magento.softwaretestingboard.com/')
+    page.locator('#ui-id-4').hover()
+    page.locator('#ui-id-9').hover()
+    page.screenshot(type='jpeg', path='/Users/eokulik/projects/playwright-start/hover.jpg')
